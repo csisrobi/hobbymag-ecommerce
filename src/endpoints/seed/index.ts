@@ -1,9 +1,7 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type { CollectionSlug, File, GlobalSlug, Payload, PayloadRequest } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
-import { productMousepad as productMousepadData } from './product-mousepad'
-import { productHat as productHatData } from './product-hat'
 import { home } from './home'
 import { image1 } from './image-1'
 import { image2 } from './image-2'
@@ -217,36 +215,36 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding products...`)
 
-  const productMousepad = await payload.create({
-    collection: 'products',
-    depth: 0,
-    data: JSON.parse(
-      JSON.stringify(productMousepadData)
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
-        .replace(/"\{\{IMAGE_3\}\}"/g, String(image3ID))
-        .replace(/"\{\{CATEGORY_1\}\}"/g, String(accessoriesID)),
-    ),
-  })
+  // const productMousepad = await payload.create({
+  //   collection: 'products',
+  //   depth: 0,
+  //   data: JSON.parse(
+  //     JSON.stringify(productMousepadData)
+  //       .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
+  //       .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
+  //       .replace(/"\{\{IMAGE_3\}\}"/g, String(image3ID))
+  //       .replace(/"\{\{CATEGORY_1\}\}"/g, String(accessoriesID)),
+  //   ),
+  // })
 
-  let mousePadID: number | string = productMousepad.id
+  // let mousePadID: number | string = productMousepad.id
 
-  if (payload.db.defaultIDType === 'text') {
-    mousePadID = `"${mousePadID}"`
-  }
+  // if (payload.db.defaultIDType === 'text') {
+  //   mousePadID = `"${mousePadID}"`
+  // }
 
-  const productHat = await payload.create({
-    collection: 'products',
-    depth: 0,
-    data: JSON.parse(
-      JSON.stringify(productHatData)
-        .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
-        .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
-        .replace(/"\{\{IMAGE_3\}\}"/g, String(image3ID))
-        .replace(/"\{\{CATEGORY_1\}\}"/g, String(hatsID))
-        .replace(/"\{\{RELATED_PRODUCT_1\}\}"/g, String(mousePadID)),
-    ),
-  })
+  // const productHat = await payload.create({
+  //   collection: 'products',
+  //   depth: 0,
+  //   data: JSON.parse(
+  //     JSON.stringify(productHatData)
+  //       .replace(/"\{\{IMAGE_1\}\}"/g, String(image1ID))
+  //       .replace(/"\{\{IMAGE_2\}\}"/g, String(image2ID))
+  //       .replace(/"\{\{IMAGE_3\}\}"/g, String(image3ID))
+  //       .replace(/"\{\{CATEGORY_1\}\}"/g, String(hatsID))
+  //       .replace(/"\{\{RELATED_PRODUCT_1\}\}"/g, String(mousePadID)),
+  //   ),
+  // })
 
   payload.logger.info(`— Seeding contact form...`)
 

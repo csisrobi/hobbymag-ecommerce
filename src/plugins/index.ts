@@ -1,16 +1,16 @@
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
+import { revalidateRedirects } from '@/hooks/revalidateRedirects'
+import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { searchFields } from '@/search/fieldOverrides'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
-import { Plugin } from 'payload'
-import { revalidateRedirects } from '@/hooks/revalidateRedirects'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
-import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import { searchFields } from '@/search/fieldOverrides'
-import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
+import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { Plugin } from 'payload'
 
 import { paymentSucceeded } from '@/stripe/webhooks/paymentSucceeded'
 
@@ -18,7 +18,9 @@ import { Page, Product } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Product | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Ecommerce Template` : 'Payload Ecommerce Template'
+  return doc?.title
+    ? `${doc.title} | Magazin Creativ Hobby Commerce`
+    : 'Magazin Creativ Hobby Commerce'
 }
 
 const generateURL: GenerateURL<Product | Page> = ({ doc }) => {
@@ -103,6 +105,21 @@ export const plugins: Plugin[] = [
       'payment_intent.succeeded': paymentSucceeded,
     },
   }),
-
-  payloadCloudPlugin(),
+  s3Storage({
+    collections: {
+      media: {
+        prefix: 'media',
+      },
+    },
+    bucket: process.env.S3_BUCKET!,
+    config: {
+      forcePathStyle: true, // Important for using Supabase
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+      },
+      region: process.env.S3_REGION,
+      endpoint: process.env.S3_ENDPOINT,
+    },
+  }),
 ]

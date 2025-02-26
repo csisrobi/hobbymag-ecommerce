@@ -12,7 +12,7 @@
  */
 export type CartItems =
   | {
-      product?: (string | null) | Product;
+      product?: (number | null) | Product;
       variantID?: string | null;
       variant?: string | null;
       unitPrice: number;
@@ -21,11 +21,65 @@ export type CartItems =
       id?: string | null;
     }[]
   | null;
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     users: User;
     products: Product;
@@ -62,7 +116,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {
     footer: Footer;
@@ -104,11 +158,11 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   name?: string | null;
   roles?: ('admin' | 'customer')[] | null;
   orders?: {
-    docs?: (string | Order)[] | null;
+    docs?: (number | Order)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   stripeCustomerID?: string | null;
@@ -132,14 +186,14 @@ export interface User {
  * via the `definition` "orders".
  */
 export interface Order {
-  id: string;
-  orderedBy?: (string | null) | User;
+  id: number;
+  orderedBy?: (number | null) | User;
   stripePaymentIntentID?: string | null;
   total: number;
   currency: string;
   items?:
     | {
-        product: string | Product;
+        product: number | Product;
         variant?: string | null;
         quantity?: number | null;
         id?: string | null;
@@ -153,7 +207,7 @@ export interface Order {
  * via the `definition` "products".
  */
 export interface Product {
-  id: string;
+  id: number;
   title: string;
   publishedOn?: string | null;
   description?: {
@@ -171,7 +225,7 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
-  gallery: (string | Media)[];
+  gallery: (number | Media)[];
   layout?: (CallToActionBlock | ContentBlock | MediaBlock)[] | null;
   enableVariants?: boolean | null;
   variants?: {
@@ -199,7 +253,7 @@ export interface Product {
            * Define stock for this variant. A stock of 0 disables checkout for this variant.
            */
           stock: number;
-          images?: (string | Media)[] | null;
+          images?: (number | Media)[] | null;
           id?: string | null;
         }[]
       | null;
@@ -209,16 +263,16 @@ export interface Product {
    */
   stock?: number | null;
   price?: number | null;
-  relatedProducts?: (string | Product)[] | null;
+  relatedProducts?: (number | Product)[] | null;
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   slug?: string | null;
   skipSync?: boolean | null;
   updatedAt: string;
@@ -230,7 +284,7 @@ export interface Product {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   caption?: {
     root: {
@@ -247,6 +301,7 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -286,7 +341,7 @@ export interface CallToActionBlock {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -307,7 +362,7 @@ export interface CallToActionBlock {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   publishedOn?: string | null;
   hero: {
@@ -334,7 +389,7 @@ export interface Page {
             newTab?: boolean | null;
             reference?: {
               relationTo: 'pages';
-              value: string | Page;
+              value: number | Page;
             } | null;
             url?: string | null;
             label: string;
@@ -346,7 +401,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    media?: (number | null) | Media;
   };
   layout: (
     | CallToActionBlock
@@ -363,7 +418,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   slug?: string | null;
@@ -400,7 +455,7 @@ export interface ContentBlock {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -421,7 +476,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -448,12 +503,12 @@ export interface ArchiveBlock {
   } | null;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'products' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   id?: string | null;
@@ -465,13 +520,13 @@ export interface ArchiveBlock {
  * via the `definition` "categories".
  */
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   slug: string;
-  parent?: (string | null) | Category;
+  parent?: (number | null) | Category;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Category;
+        doc?: (number | null) | Category;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -487,12 +542,12 @@ export interface Category {
 export interface CarouselBlock {
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'products' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   /**
@@ -501,7 +556,7 @@ export interface CarouselBlock {
   populatedDocs?:
     | {
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       }[]
     | null;
   /**
@@ -517,7 +572,7 @@ export interface CarouselBlock {
  * via the `definition` "ThreeItemGridBlock".
  */
 export interface ThreeItemGridBlock {
-  products?: (string | Product)[] | null;
+  products?: (number | Product)[] | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'threeItemGrid';
@@ -552,7 +607,7 @@ export interface BannerBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: string | Form;
+  form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
     root: {
@@ -578,7 +633,7 @@ export interface FormBlock {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -751,7 +806,7 @@ export interface Form {
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: string;
+  id: number;
   /**
    * You will need to rebuild the website when changing this field.
    */
@@ -761,11 +816,11 @@ export interface Redirect {
     reference?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'products';
-          value: string | Product;
+          value: number | Product;
         } | null);
     url?: string | null;
   };
@@ -777,8 +832,8 @@ export interface Redirect {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -796,18 +851,18 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc: {
     relationTo: 'products';
-    value: string | Product;
+    value: number | Product;
   };
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   categories?:
     | {
@@ -824,52 +879,52 @@ export interface Search {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'products';
-        value: string | Product;
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'categories';
-        value: string | Category;
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'orders';
-        value: string | Order;
+        value: number | Order;
       } | null)
     | ({
         relationTo: 'redirects';
-        value: string | Redirect;
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: string | Search;
+        value: number | Search;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -879,10 +934,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -902,7 +957,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1210,6 +1265,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1469,7 +1525,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1477,7 +1533,7 @@ export interface Footer {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
@@ -1493,7 +1549,7 @@ export interface Footer {
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1501,7 +1557,7 @@ export interface Header {
           newTab?: boolean | null;
           reference?: {
             relationTo: 'pages';
-            value: string | Page;
+            value: number | Page;
           } | null;
           url?: string | null;
           label: string;
