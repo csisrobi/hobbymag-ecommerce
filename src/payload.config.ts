@@ -20,8 +20,6 @@ import { Products } from '@/collections/Products'
 import { Users } from '@/collections/Users'
 import { createPaymentIntent } from '@/endpoints/create-payment-intent'
 import { productsProxy } from '@/endpoints/products'
-import { Footer } from '@/globals/Footer'
-import { Header } from '@/globals/Header'
 // import { productUpdated } from '@/stripe/webhooks/productUpdated'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { plugins } from './plugins'
@@ -107,7 +105,6 @@ export default buildConfig({
       path: '/stripe/customers',
     }, */
   ],
-  globals: [Footer, Header],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder

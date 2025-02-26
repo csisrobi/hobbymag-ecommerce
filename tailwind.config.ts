@@ -1,3 +1,5 @@
+/* eslint-disable import/no-anonymous-default-export */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const plugin = require('tailwindcss/plugin')
 /** @type {import('tailwindcss').Config} */
 export default {

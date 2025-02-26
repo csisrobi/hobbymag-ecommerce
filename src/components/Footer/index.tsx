@@ -1,17 +1,11 @@
-import type { Footer } from '@/payload-types'
-
-import { FooterMenu } from '@/components/Footer/menu'
 import { LogoSquare } from '@/components/LogoSquare'
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
-import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 
 const { COMPANY_NAME, SITE_NAME } = process.env
 
 export async function Footer() {
-  const footer: Footer = await getCachedGlobal('footer', 1)()
-  const menu = footer.navItems || []
   const currentYear = new Date().getFullYear()
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '')
   const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700'
@@ -40,7 +34,7 @@ export async function Footer() {
               </div>
             }
           >
-            <FooterMenu menu={menu} />
+            {/* <FooterMenu menu={menu} /> */}
           </Suspense>
           <div className="md:ml-auto">
             <a
@@ -63,12 +57,6 @@ export async function Footer() {
             {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
           </p>
           <hr className="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" />
-          <p>Designed in Michigan</p>
-          <p className="md:ml-auto">
-            <a className="text-black dark:text-white" href="https://payloadcms.com">
-              Crafted by ▲ Prayload
-            </a>
-          </p>
         </div>
       </div>
     </footer>

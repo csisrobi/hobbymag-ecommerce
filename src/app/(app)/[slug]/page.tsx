@@ -1,15 +1,12 @@
 import type { Metadata } from 'next'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React from 'react'
-
-import type { Page } from '@/payload-types'
+import { getPayload } from 'payload'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
