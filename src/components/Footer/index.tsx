@@ -37,15 +37,6 @@ export async function Footer() {
             {/* <FooterMenu menu={menu} /> */}
           </Suspense>
           <div className="md:ml-auto">
-            <a
-              aria-label="Deploy on Vercel"
-              className="flex mb-4 h-8 w-max flex-none items-center justify-center rounded-md border border-neutral-200 bg-white text-xs text-black dark:border-neutral-700 dark:bg-black dark:text-white"
-              href="https://vercel.com/templates/next.js/nextjs-commerce"
-            >
-              <span className="px-3">▲</span>
-              <hr className="h-full border-r border-neutral-200 dark:border-neutral-700" />
-              <span className="px-3">Deploy</span>
-            </a>
             <ThemeSelector />
           </div>
         </div>
@@ -56,7 +47,7 @@ export async function Footer() {
             &copy; {copyrightDate} {copyrightName}
             {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
           </p>
-          <hr className="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" />
+          {/* <hr className="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" /> */}
         </div>
       </div>
     </footer>

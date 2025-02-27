@@ -1,4 +1,4 @@
-import type { Product } from '@/payload-types'
+import type { Media, Product } from '@/payload-types'
 
 import { Grid } from '@/components/grid'
 import { GridTileImage } from '@/components/grid/tile'
@@ -26,10 +26,10 @@ export function ProductGridItems({ products }: { products: Partial<Product>[] })
               <GridTileImage
                 label={{
                   amount: product.price!,
-                  currencyCode: product.currency!,
+                  currencyCode: 'ron',
                   title: product.title!,
                 }}
-                media={image}
+                media={image as Media}
               />
             </Link>
           </Grid.Item>

@@ -1,9 +1,9 @@
-import type { Product, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import type { ArchiveBlock as ArchiveBlockProps, Product } from '@/payload-types'
 
+import RichText from '@/components/RichText'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
-import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 
@@ -40,7 +40,6 @@ export const ArchiveBlock: React.FC<
           }
         : {}),
     })
-
     posts = fetchedProducts.docs
   } else {
     if (selectedDocs?.length) {

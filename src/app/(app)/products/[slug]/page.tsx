@@ -5,10 +5,10 @@ import { GridTileImage } from '@/components/grid/tile'
 import { Gallery } from '@/components/product/Gallery'
 import { ProductDescription } from '@/components/product/ProductDescription'
 import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
 import React, { Suspense } from 'react'
 
 /* export async function generateMetadata({
@@ -165,7 +165,7 @@ function RelatedProducts({ products }: { products: Product[] }) {
               <GridTileImage
                 label={{
                   amount: product.price!,
-                  currencyCode: 'usd',
+                  currencyCode: 'ron',
                   title: product.title,
                 }}
                 media={product.meta?.image as Media}

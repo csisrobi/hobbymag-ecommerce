@@ -17,7 +17,7 @@ const demoData = {
   ],
   auth: {
     login: { text: 'Log in', url: '/login' },
-    signup: { text: 'Sign up', url: '/signup' },
+    signup: { text: 'Sign up', url: '/create-account' },
   },
 }
 
